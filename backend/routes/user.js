@@ -1,8 +1,8 @@
 const express = require('express');
 const zod = require('zod');
-const User = require('../db');
+const {User} = require('../db');
 const jsonwebtoken = require('jsonwebtoken');
-const jwtToken = require('../config')
+const {jwtToken} = require('../config')
 
 const userRouter = express.Router();
 userRouter.use(express.json())
@@ -15,29 +15,30 @@ const Schema = zod.object({
 })
 
 userRouter.post("/signup", async (request,response)=> {
-    console.log(req.body); // Add this line to log the request body
-    const username = request.body.username;
-    const password = request.body.password;
-    const firstName = request.body.firstName;
-    const lastName = request.body.lastName;
+    const {username, password,lastName,firstName} = request.body;
 
     const result = Schema.safeParse({username,password,firstName,lastName});
 
-    if(result.error){
-        response.status(411).json({message : "Email already taken / Incorrect inputs"})
+    if(!result.success){
+        response.status(411).json({message : result.error})
     }
 
-    const userExists = await User.fineOne(username);
+    const userExists = await User.findOne({username : username});
+
+    if(userExists){
+        response.status(411).json({message : "Email already taken/Incorrect inputs" })
+    }
+
 
     if(userExists){
         response.status(411).json({message : "Email already taken / Incorrect inputs"})
         return;
     }
 
-    const newUser = new User(username,password,firstName,lastName);
-    await newUser.save();
+    const newUser = await User.create({username,password,firstName,lastName});
+    const userid = newUser._id;
     
-    const token = jsonwebtoken.sign(newUser,jwtToken);
+    const token = jsonwebtoken.sign({newUser},jwtToken);
 
     response.status(200).json({
         message: "User created successfully",
