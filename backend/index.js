@@ -2,6 +2,7 @@ const express = require("express");
 const rootRouter = require("./routes/index");
 const cors = require('cors');
 const {Port} = require("./config")
+const {authMiddleWare} = require("./middleware");
 
 const app = express();
 app.use(cors());
