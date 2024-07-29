@@ -29,7 +29,7 @@ const updateSchema = zod.object({
 
 
 userRouter.post("/signup", async (request,response)=> {
-
+    console.log(request.body);
     const {username, password,lastName,firstName} = request.body;
 
     const result = SignUpSchema.safeParse({username,password,firstName,lastName});
@@ -72,11 +72,11 @@ userRouter.post("/signin", async (request,response)=>{
 userRouter.put("/updateUser", authMiddleWare, async (request,response)=>{
     const {username,password,lastName,firstName}  = request.body;
 
-    const {success} = updateSchema.safeParse(request.body);
-    if(!success){
-        return response.status(404).send('User not found or data not modified');
+    const zodParse = updateSchema.safeParse(request.body);
+    if(!zodParse.success){
+        return response.status(404).send(zodParse.error);
     }
-    console.log(username);
+    
     const result = await User.updateOne({ username :username},{ $set: {password,lastName,firstName} });
 
     if(result.modifiedCount === 0){
@@ -84,6 +84,21 @@ userRouter.put("/updateUser", authMiddleWare, async (request,response)=>{
     }
     
     return response.status(200).send("Updated successfully");
+})
+
+userRouter.get("/bulk", authMiddleWare, async (request,response)=>{
+    const {filter} = request.query;
+
+    const users = await User.find( { $or: [
+        { firstName: filter  },
+        { lastName: filter  }
+    ]})
+
+    if(!users){
+      return   response.status(401).json("Users not found");
+    }
+
+    return response.status(200).json( {Users : users.map( user => (user.username) ) });
 })
 
 module.exports = userRouter;
