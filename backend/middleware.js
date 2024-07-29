@@ -15,12 +15,14 @@ function  authMiddleWare( request,response,next)
         return response.status(401).json({message : "Authorization header is missing"})
     }
     try{
-    const decoded = jsonwebtoken.verify(token,jwtToken);
-    request.username = decoded.username;
+    const decoded = jsonwebtoken.verify(token,jwtToken); 
+    if(decoded.username){
+    request.body.username = decoded.username;
+    }
     next();
     }
     catch (err){
-        return res.status(403).json({});
+        return response.status(403).json({});
     }
 
 
