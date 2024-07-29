@@ -89,10 +89,15 @@ userRouter.put("/updateUser", authMiddleWare, async (request,response)=>{
 userRouter.get("/bulk", authMiddleWare, async (request,response)=>{
     const {filter} = request.query;
 
-    const users = await User.find( { $or: [
-        { firstName: filter  },
-        { lastName: filter  }
-    ]})
+    const users = await User.find( {$or: [{
+        firstName: {
+            "$regex": filter
+        }
+    }, {
+        lastName: {
+            "$regex": filter
+        }
+    }]})
 
     if(!users){
       return   response.status(401).json("Users not found");
