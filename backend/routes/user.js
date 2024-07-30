@@ -1,12 +1,11 @@
 const express = require('express');
 const zod = require('zod');
-const {User} = require('../db');
+const {User,Account} = require('../db');
 const jsonwebtoken = require('jsonwebtoken');
 const {jwtToken} = require('../config')
 const {authMiddleWare} = require('../middleware');
 
 const userRouter = express.Router();
-userRouter.use(express.json())
 
 const SignUpSchema = zod.object({
     username : zod.string().max(50,'User name can have 50 character').min(1,'User name should have 1 character'),
@@ -44,6 +43,10 @@ userRouter.post("/signup", async (request,response)=> {
 
     const newUser = await User.create({username,password,firstName,lastName});
     const token = jsonwebtoken.sign({newUser},jwtToken);
+
+    const balance = parseInt(Math.random()*10000);
+
+    await Account.create({ userId :newUser._id , balance});
 
     return response.status(200).json({
         message: "User created successfully",
