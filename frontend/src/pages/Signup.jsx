@@ -2,7 +2,7 @@ import { BottomWarning } from "../components/BottomWarning";
 import { Button } from "../components/Button";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
-import { Header } from "../components/Header";
+import { Header } from "../components/Headers";
 
 export function SignUp( ){
     return <div className=" bg-customBackGround  flex items-center justify-center  h-screen">
