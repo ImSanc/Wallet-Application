@@ -28,7 +28,6 @@ const updateSchema = zod.object({
 
 
 userRouter.post("/signup", async (request,response)=> {
-    console.log(request.body);
     const {username, password,lastName,firstName} = request.body;
 
     const result = SignUpSchema.safeParse({username,password,firstName,lastName});
@@ -65,7 +64,7 @@ userRouter.post("/signin", async (request,response)=>{
 
     const userExists = await User.findOne( {username,password});
     if(!userExists){
-        return response.status(411).json({message: "Error while logging in"});
+        return response.status(411).json({message: "User doesnt exist"});
     }
 
     const token = jsonwebtoken.sign({username},jwtToken);
