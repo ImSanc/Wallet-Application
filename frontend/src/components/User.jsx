@@ -17,7 +17,7 @@ export function User({user}) {
                 </div>
             </div>
 
-                <Link to={"/sendMoney"} className=" flex justify-center justify-items-center bg-black text-white rounded-md py-2 px-4 w-25 hover:opacity-50">
+                <Link to={"/sendmoney"} className=" flex justify-center justify-items-center bg-black text-white rounded-md py-2 px-4 w-25 hover:opacity-50">
                     Send Money
                 </Link> 
 
