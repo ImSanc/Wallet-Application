@@ -88,9 +88,10 @@ userRouter.put("/updateUser", authMiddleWare, async (request,response)=>{
     return response.status(200).send("Updated successfully");
 })
 
-userRouter.get("/bulk", authMiddleWare, async (request,response)=>{
-    const {filter} = request.query;
+userRouter.get("/bulk", async (request,response)=>{
 
+    const filter = request.query.filter ? request.query.filter : '' 
+    
     const users = await User.find( {$or: [{
         firstName: {
             "$regex": filter
@@ -105,7 +106,10 @@ userRouter.get("/bulk", authMiddleWare, async (request,response)=>{
       return   response.status(401).json("Users not found");
     }
 
-    return response.status(200).json( {Users : users.map( user => (user.username) ) });
+    return response.status(200).json( { Users : users.map( user => ({
+        username: user.username,
+        firstName: user.firstName,
+        lastName : user.lastName } ) ) });
 })
 
 module.exports = userRouter;
