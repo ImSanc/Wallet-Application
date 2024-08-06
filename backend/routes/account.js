@@ -19,14 +19,14 @@ const transferSchema = zod.object({
 
 
 accountRouter.get("/balance", authMiddleWare, async(request,response)=>{
-    
-    const {success} = balanceCheckSchema.safeParse(request.body);
+
+    const {success} = balanceCheckSchema.safeParse(request.headers);
 
     if(!success){
       return  response.status(401).json("User not authorized");
     }
     
-    const username = request.body.username;
+    const username = request.headers.username;
     const user = await User.find({username});
     const userId = user[0]._id;
 

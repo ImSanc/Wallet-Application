@@ -3,13 +3,17 @@ import { Button } from "../components/Button";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
 import { Header } from "../components/Headers";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 import {  useNavigate } from "react-router-dom";
 
-
-
 export function SignUp( ){
+
+    useEffect( ()=>{
+        if(localStorage.getItem("token")){
+            navigate("/dashboard");
+        }
+    },[])
     
     const [firstName,setFirstName] = useState("");
     const [lastName,setLastName] = useState("");
@@ -44,7 +48,8 @@ export function SignUp( ){
             });
             
             if(response.data.token){
-              localStorage.setItem("token",response.data.token);
+              localStorage.setItem("token","Bearer "+response.data.token);
+              localStorage.setItem("username" , response.data.username);
               navigate("/dashboard");
             }
             else{

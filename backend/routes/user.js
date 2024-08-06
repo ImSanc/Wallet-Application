@@ -49,7 +49,8 @@ userRouter.post("/signup", async (request,response)=> {
 
     return response.status(200).json({
         message: "User created successfully",
-        token: token
+        token: token,
+        username : username
     })
 
 })
@@ -68,7 +69,10 @@ userRouter.post("/signin", async (request,response)=>{
     }
 
     const token = jsonwebtoken.sign({username},jwtToken);
-    return response.status(200).json({token: token}); 
+    return response.status(200).json({
+        token: token,
+        username : username
+    }); 
 })
 
 userRouter.put("/updateUser", authMiddleWare, async (request,response)=>{
@@ -88,7 +92,7 @@ userRouter.put("/updateUser", authMiddleWare, async (request,response)=>{
     return response.status(200).send("Updated successfully");
 })
 
-userRouter.get("/bulk", async (request,response)=>{
+userRouter.get("/bulk",authMiddleWare, async (request,response)=>{
 
     const filter = request.query.filter ? request.query.filter : '' 
     
@@ -110,6 +114,23 @@ userRouter.get("/bulk", async (request,response)=>{
         username: user.username,
         firstName: user.firstName,
         lastName : user.lastName } ) ) });
+})
+
+userRouter.get("/userDetails",authMiddleWare, async (request,response)=>{
+
+    const username = request.headers.username;
+
+    const user = await User.findOne({username});
+
+    if(!user){
+      return   response.status(401).json("Users not found");
+    }
+
+    return response.status(200).json( { user : {
+        username : user.username,
+        firstName : user.firstName,
+        lastName : user.lastName,
+    } });
 })
 
 module.exports = userRouter;
