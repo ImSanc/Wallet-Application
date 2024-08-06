@@ -8,14 +8,14 @@ const {authMiddleWare} = require('../middleware');
 const userRouter = express.Router();
 
 const SignUpSchema = zod.object({
-    username : zod.string().max(50,'User name can have 50 character').min(1,'User name should have 1 character'),
+    username : zod.string().email().max(50,'User name can have 50 character').min(1,'User name should have 1 character'),
     password : zod.string().min(6,"Password should be of 6 letters").max(50,"Password can have 50 character"),
     firstName : zod.string().max(50,"First Name can have 50 character"),
     lastName : zod.string().max(50,"First Name can have 50 character")
 })
 
 const SignInSchema = zod.object({
-    username : zod.string().max(50,'User name can have 50 character').min(1,'User name should have 1 character'),
+    username : zod.string().email().max(50,'User name can have 50 character').min(1,'User name should have 1 character'),
     password : zod.string().min(6,"Password should be of 6 letters").max(50,"Password can have 50 character")
 })
 
