@@ -47,7 +47,7 @@ export  function Dashboard(){
     },[])
 
     return (
-        <div>
+        <div className=" bg-slate-100 h-screen w-screen">
             <Appbar username={user}/>
             <Balance balance={balance}/>
             <Users/>
