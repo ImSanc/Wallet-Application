@@ -18,6 +18,7 @@ export  function Dashboard(){
 
         if(!token){
             navigate("/signin");
+            return;
         }
 
 
