@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export function TransferStatus({ success }) {
   return (
     <div className={`${success ? 'bg-green-100' : 'bg-red-100'}  w-screen h-screen flex justify-center items-center`}>
-      <div className={`flex flex-col justify-between items-center ${success ? 'bg-green-500' : 'bg-red-400'} rounded-lg w-[30%] h-[30%] font-medium p-4`}>
+      <div className={`flex flex-col justify-between items-center ${success ? 'bg-green-400' : 'bg-red-400'} rounded-lg w-[30%] h-[30%] font-medium p-4`}>
         <div className="flex flex-col items-center">
           <div className="flex justify-center items-center text-2xl p-3">
             <div className="mx-2">
