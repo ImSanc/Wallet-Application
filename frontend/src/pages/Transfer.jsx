@@ -6,7 +6,8 @@ export function Transfer( ){
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const transferStatus = searchParams.get('sucess');
+    const transferStatus = searchParams.get('success') === 'true';
+    console.log(transferStatus);
     
     useEffect( ()=>{
         const token = localStorage.getItem("token");

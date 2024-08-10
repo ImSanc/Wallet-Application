@@ -14,16 +14,21 @@ export function Amount({token,buttonName,sender,receiver}){
             alert("Please enter an amount!!")
         }
 
-        const response = await axios.post('http://localhost:3000/api/v1/account/transfer',{
-            username : sender,
-            to : receiver,
-            amount : parseInt(amount)
-        },{ headers : {
-            'Authorization' : token,
-            'username' : sender
-        }})
+        try{
+            const response = await axios.post('http://localhost:3000/api/v1/account/transfer',{
+                username : sender,
+                to : receiver,
+                amount : parseInt(amount)
+            },{ headers : {
+                'Authorization' : token,
+                'username' : sender
+            }})
 
-        navigate(`/transfer?=${response.data.success}`)
+            navigate(`/transfer?success=${response.data.success}`)
+        }
+        catch(error){
+            navigate(`/transfer?success=${error.response.data.success}`)
+        }
         
     }
     return (
