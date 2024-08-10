@@ -60,7 +60,7 @@ accountRouter.post("/transfer" ,authMiddleWare ,async (request,response) =>{
         const amountToDeduct = request.body.amount;
 
         if(!toUser){
-           return response.status(400).json({message : "Invalid account"});
+           return response.status(400).json({message : "Invalid account" , success : false});
         }
         const toUserID = toUser[0]._id;
        
@@ -70,7 +70,7 @@ accountRouter.post("/transfer" ,authMiddleWare ,async (request,response) =>{
        
 
         if( senderBalance< amountToDeduct){
-            return response.status(400).json({message : "Insufficient balance"});
+            return response.status(400).json({message : "Insufficient balance", success : false});
         }
 
        
@@ -86,12 +86,12 @@ accountRouter.post("/transfer" ,authMiddleWare ,async (request,response) =>{
 
         await session.commitTransaction();
         session.endSession();   
-        return response.status(200).json({message : "Transfer successful"});
+        return response.status(200).json({message : "Transfer successful" ,success : true});
     }
     catch(error){
         await session.abortTransaction();
         session.endSession();
-        return response.status(400).json({message : "Something is up, Transaction failed"});
+        return response.status(400).json({message : "Something is up, Transaction failed",success : false});
     }
 
 })

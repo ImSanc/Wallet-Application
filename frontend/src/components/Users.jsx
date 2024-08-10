@@ -32,7 +32,7 @@ export function Users() {
                 }}/>
             </div>
             <div>
-                {users.map((users, index) => <User key={index} user = {users} />)}
+                {users.map((users, index) => <User key={index} user = {users} currentUser= {username} />)}
             </div>
         </div>
     );

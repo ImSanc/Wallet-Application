@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { Button } from "./Button";
 
-export function User({user}) {
+export function User({user,currentUser}) {
     return (
         <div className="flex justify-between flex-row justify-items-center p-2">
             <div className="flex mx-2 flex-row">
@@ -17,7 +16,7 @@ export function User({user}) {
                 </div>
             </div>
 
-                <Link to={"/sendmoney"} className=" flex justify-center justify-items-center bg-green-600 text-white rounded-md py-2 px-4 w-25 hover:bg-black">
+                <Link to={`/sendmoney?user=${currentUser}&toUser=${user.username}`} className=" flex justify-center justify-items-center bg-slate-800 text-white rounded-md py-2 px-4 w-25 hover:bg-black">
                     Send Money
                 </Link> 
 
