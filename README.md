@@ -21,7 +21,7 @@ Welcome to the Wallet Clone project! This project aims to replicate the basic fu
 1. **Clone the Repository**: Clone the repository from GitHub:
 
    ```bash
-   git clone https://github.com/ImSanc/paytmClone.git
+   git clone https://github.com/ImSanc/Wallet-Application.git
 
 
 2. **Set Environment Variables**: Navigate to backend folders and add config. You may need to create a config.js file and configure it with required variables: In the backend/config.js file:
