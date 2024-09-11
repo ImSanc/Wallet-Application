@@ -1,10 +1,9 @@
 
 # Wallet Application
+Welcome to the Wallet Clone project! This project aims to replicate the basic functionality of Wallet, allowing users to perform transactions, view their account balance, and interact with other users.
 
 # Demo 
-https://github.com/ImSanc/Assets/blob/main/chrome_gjecvR9mwk.mp4
-
-Welcome to the Wallet Clone project! This project aims to replicate the basic functionality of Wallet, allowing users to perform transactions, view their account balance, and interact with other users.
+https://github.com/user-attachments/assets/38890e7a-3f02-4ab7-913d-dc78ab9fa332
 
 # Features
 - User Authentication & Authorization using JWT
